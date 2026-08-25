@@ -41,9 +41,17 @@ async function bootstrap() {
   // Swagger
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Portfolio API')
-    .setDescription('Portfolio website backend API documentation')
+    .setDescription(
+      'Backend API for the fully dynamic portfolio website with admin dashboard. ' +
+        'Includes Projects, Skills, Blog, Testimonials, Comments/Reactions, and Auth (JWT access + refresh token).',
+    )
     .setVersion('1.0')
-    .addBearerAuth()
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'access-token', // এই নামটা @ApiBearerAuth() এ পরে reference করা যাবে
+    )
+    .addTag('Auth', 'Registration, login, and token management')
+    .addTag('Projects', 'Portfolio project CRUD and public listing')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api/docs', app, document);
