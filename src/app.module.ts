@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './modules/projects/projects.module';
+import { TechnologiesModule } from './modules/technologies/technologies.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
     UsersModule,
     AuthModule,
     ProjectsModule,
+    TechnologiesModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
