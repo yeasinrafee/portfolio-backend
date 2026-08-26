@@ -45,7 +45,7 @@ export class PaginationDto {
   })
   @IsOptional()
   @IsString()
-  sortBy?: string = 'createdAt';
+  sortBy?: string;
 
   @ApiPropertyOptional({
     example: 'desc',
@@ -54,7 +54,7 @@ export class PaginationDto {
   })
   @IsOptional()
   @IsIn(['asc', 'desc'])
-  sortOrder?: 'asc' | 'desc' = 'desc';
+  sortOrder?: 'asc' | 'desc';
 
   get skip(): number {
     return ((this.page ?? 1) - 1) * (this.limit ?? 10);

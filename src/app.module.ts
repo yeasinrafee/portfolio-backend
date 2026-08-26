@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { TechnologiesModule } from './modules/technologies/technologies.module';
+import { SkillsModule } from './modules/skills/skills.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { TechnologiesModule } from './modules/technologies/technologies.module';
     AuthModule,
     ProjectsModule,
     TechnologiesModule,
+    SkillsModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],

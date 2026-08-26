@@ -1,0 +1,18 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+
+export class SkillResponseDto {
+  @ApiProperty({ example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' })
+  id!: string;
+
+  @ApiProperty({ example: 'Next.js' })
+  name!: string;
+
+  @ApiProperty({ example: 'Frontend' })
+  category!: string;
+
+  @ApiPropertyOptional({ example: 'https://cdn.example.com/icons/nextjs.svg' })
+  icon?: string;
+
+  @ApiProperty({ example: 0 })
+  order!: number;
+}
