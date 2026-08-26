@@ -1,11 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsString,
   IsOptional,
   IsBoolean,
-  IsDateString,
   IsInt,
   MaxLength,
+  IsDate,
 } from 'class-validator';
 
 export class CreateEducationDto {
@@ -33,13 +34,15 @@ export class CreateEducationDto {
   isCurrent?: boolean;
 
   @ApiProperty({ example: '2019-01-01' })
-  @IsDateString()
-  startDate!: string;
+  @Type(() => Date)
+  @IsDate()
+  startDate!: Date;
 
   @ApiPropertyOptional({ example: '2023-01-01' })
   @IsOptional()
-  @IsDateString()
-  endDate?: string;
+  @Type(() => Date)
+  @IsDate()
+  endDate?: Date;
 
   @ApiPropertyOptional({ example: 0, default: 0 })
   @IsOptional()

@@ -3,10 +3,11 @@ import {
   IsString,
   IsOptional,
   IsBoolean,
-  IsDateString,
+  IsDate,
   IsInt,
   MaxLength,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateExperienceDto {
   @ApiProperty({ example: 'Emperal Tech', maxLength: 150 })
@@ -25,32 +26,26 @@ export class CreateExperienceDto {
   location?: string;
 
   @ApiProperty({
-    example:
-      'Leading full-stack development, DevOps, and AI/ML initiatives for client projects.',
+    example: 'Leading full-stack development, DevOps, and AI/ML initiatives.',
   })
   @IsString()
   description!: string;
 
-  @ApiPropertyOptional({
-    example: false,
-    default: false,
-    description: 'True if this is the current position',
-  })
+  @ApiPropertyOptional({ example: false, default: false })
   @IsOptional()
   @IsBoolean()
   isCurrent?: boolean;
 
   @ApiProperty({ example: '2023-01-01' })
-  @IsDateString()
-  startDate!: string;
+  @Type(() => Date)
+  @IsDate()
+  startDate!: Date;
 
-  @ApiPropertyOptional({
-    example: '2025-06-30',
-    description: 'Omit if isCurrent is true',
-  })
+  @ApiPropertyOptional({ example: '2025-06-30' })
   @IsOptional()
-  @IsDateString()
-  endDate?: string;
+  @Type(() => Date)
+  @IsDate()
+  endDate?: Date;
 
   @ApiPropertyOptional({ example: 0, default: 0 })
   @IsOptional()

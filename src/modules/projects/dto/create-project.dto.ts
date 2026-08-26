@@ -11,11 +11,12 @@ import {
   IsUrl,
   IsEnum,
   IsInt,
-  IsDateString,
   MaxLength,
   ArrayUnique,
+  IsDate,
 } from 'class-validator';
 import { Status } from '../../../generated/prisma/enums';
+import { Type } from 'class-transformer';
 
 export class CreateProjectDto {
   @ApiProperty({ example: 'Portfolio Dashboard', maxLength: 150 })
@@ -93,13 +94,15 @@ export class CreateProjectDto {
 
   @ApiPropertyOptional({ example: '2026-01-15' })
   @IsOptional()
-  @IsDateString()
-  startDate?: string;
+  @Type(() => Date)
+  @IsDate()
+  startDate?: Date;
 
   @ApiPropertyOptional({ example: '2026-03-20' })
   @IsOptional()
-  @IsDateString()
-  endDate?: string;
+  @Type(() => Date)
+  @IsDate()
+  endDate?: Date;
 
   @ApiPropertyOptional({
     example: ['a1b2c3d4-...', 'e5f6g7h8-...'],
