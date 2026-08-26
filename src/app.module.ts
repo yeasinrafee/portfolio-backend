@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { TechnologiesModule } from './modules/technologies/technologies.module';
 import { SkillsModule } from './modules/skills/skills.module';
+import { ExperienceModule } from './modules/experience/experience.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { SkillsModule } from './modules/skills/skills.module';
     ProjectsModule,
     TechnologiesModule,
     SkillsModule,
+    ExperienceModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
