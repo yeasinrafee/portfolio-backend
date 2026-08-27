@@ -17,6 +17,7 @@ import { BlogModule } from './modules/blog/blog.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { ReactionsModule } from './modules/reactions/reactions.module';
 import { TestimonialsModule } from './modules/testimonials/testimonials.module';
+import { ContactModule } from './modules/contact/contact.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { TestimonialsModule } from './modules/testimonials/testimonials.module';
     CommentsModule,
     ReactionsModule,
     TestimonialsModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
