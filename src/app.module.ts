@@ -19,6 +19,8 @@ import { ReactionsModule } from './modules/reactions/reactions.module';
 import { TestimonialsModule } from './modules/testimonials/testimonials.module';
 import { ContactModule } from './modules/contact/contact.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { UploadsModule } from './modules/uploads/uploads.module';
 
 @Module({
   imports: [
@@ -47,6 +49,8 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     TestimonialsModule,
     ContactModule,
     DashboardModule,
+    CloudinaryModule,
+    UploadsModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
