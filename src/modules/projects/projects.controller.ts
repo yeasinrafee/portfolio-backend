@@ -22,6 +22,7 @@ import {
   ApiNotFoundResponse,
   ApiForbiddenResponse,
   ApiOkResponse,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -30,9 +31,10 @@ import { QueryProjectDto } from './dto/query-project.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { Role } from '../../generated/prisma/enums';
+import { Role, Status } from '../../generated/prisma/enums';
 import { ApiPaginatedResponse } from '../../common/decorators/api-paginated-response.decorator';
 import { ProjectResponseDto } from './dto/project-response.dto';
+import { BlogSortOption } from '../blog/dto/query-blog.dto';
 
 @ApiTags('Projects')
 @Controller('projects')
@@ -40,6 +42,19 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
+  @ApiQuery({
+    name: 'search',
+    required: false,
+    description: 'Full-text search (title, description/content, tags)',
+  })
+  @ApiQuery({
+    name: 'sort',
+    required: false,
+    enum: BlogSortOption,
+    description: 'latest | oldest | popular',
+  })
+  @ApiQuery({ name: 'tag', required: false })
+  @ApiQuery({ name: 'status', required: false, enum: Status })
   @ApiOperation({
     summary: 'List all projects',
     description:

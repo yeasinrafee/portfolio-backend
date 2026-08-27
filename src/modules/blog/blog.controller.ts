@@ -17,17 +17,18 @@ import {
   ApiParam,
   ApiNotFoundResponse,
   ApiForbiddenResponse,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
-import { QueryBlogDto } from './dto/query-blog.dto';
+import { BlogSortOption, QueryBlogDto } from './dto/query-blog.dto';
 import { BlogResponseDto } from './dto/blog-response.dto';
 import { ApiPaginatedResponse } from '../../common/decorators/api-paginated-response.decorator';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
-import { Role } from '../../generated/prisma/enums';
+import { Role, Status } from '../../generated/prisma/enums';
 
 @ApiTags('Blog')
 @Controller('blog')
@@ -35,6 +36,19 @@ export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
   @Get()
+  @ApiQuery({
+    name: 'search',
+    required: false,
+    description: 'Full-text search (title, description/content, tags)',
+  })
+  @ApiQuery({
+    name: 'sort',
+    required: false,
+    enum: BlogSortOption,
+    description: 'latest | oldest | popular',
+  })
+  @ApiQuery({ name: 'tag', required: false })
+  @ApiQuery({ name: 'status', required: false, enum: Status })
   @ApiOperation({
     summary: 'List all blog posts',
     description:
@@ -43,6 +57,17 @@ export class BlogController {
   @ApiPaginatedResponse(BlogResponseDto)
   findAll(@Query() query: QueryBlogDto) {
     return this.blogService.findAll(query);
+  }
+
+  @Get('popular')
+  @ApiOperation({
+    summary: 'Get top N most-viewed published blog posts',
+    description:
+      'Public endpoint. No pagination wrapper — returns a flat array, ideal for homepage/sidebar widgets.',
+  })
+  @ApiOkResponse({ type: [BlogResponseDto] })
+  findPopular(@Query('limit') limit?: number) {
+    return this.blogService.findPopular(limit ? Number(limit) : 5);
   }
 
   @Get(':slug')

@@ -69,13 +69,12 @@ export class ProjectsService {
       ...(featured !== undefined && { featured }),
       ...(category && { category }),
       ...(technologyId && { technologies: { some: { id: technologyId } } }),
-      ...(search && {
-        OR: [
-          { title: { contains: search, mode: 'insensitive' } },
-          { description: { contains: search, mode: 'insensitive' } },
-        ],
-      }),
     };
+
+    // ⬇️ search থাকলে full-text search পথে যাবে, না থাকলে আগের normal filtering
+    if (search) {
+      return this.searchProjects(search, where, page, limit);
+    }
 
     const [data, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({
@@ -89,6 +88,42 @@ export class ProjectsService {
     ]);
 
     return new PaginatedResponseDto(data, total, page, limit);
+  }
+
+  private async searchProjects(
+    search: string,
+    where: Prisma.ProjectWhereInput,
+    page: number,
+    limit: number,
+  ) {
+    const ranked = await this.prisma.$queryRaw<{ id: string }[]>`
+    SELECT id FROM projects
+    WHERE "searchVector" @@ websearch_to_tsquery('english', ${search})
+    ORDER BY ts_rank("searchVector", websearch_to_tsquery('english', ${search})) DESC
+  `;
+
+    if (ranked.length === 0) {
+      return new PaginatedResponseDto([], 0, page, limit);
+    }
+
+    const rankedIds = ranked.map((r) => r.id);
+    const rankIndex = new Map(rankedIds.map((id, idx) => [id, idx]));
+
+    const [matches, total] = await this.prisma.$transaction([
+      this.prisma.project.findMany({
+        where: { ...where, id: { in: rankedIds } },
+        include: { technologies: true, images: { orderBy: { order: 'asc' } } },
+      }),
+      this.prisma.project.count({ where: { ...where, id: { in: rankedIds } } }),
+    ]);
+
+    const sorted = matches.sort(
+      (a, b) => rankIndex.get(a.id)! - rankIndex.get(b.id)!,
+    );
+    const start = (page - 1) * limit;
+    const paginated = sorted.slice(start, start + limit);
+
+    return new PaginatedResponseDto(paginated, total, page, limit);
   }
 
   async findBySlug(slug: string) {

@@ -5,9 +5,9 @@ import sanitizeHtml from 'sanitize-html';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
-import { QueryBlogDto } from './dto/query-blog.dto';
+import { BlogSortOption, QueryBlogDto } from './dto/query-blog.dto';
 import { PaginatedResponseDto } from '../../common/dto/paginated-response.dto';
-import { Prisma } from '../../generated/prisma/client';
+import { Prisma, Status } from '../../generated/prisma/client';
 
 const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   allowedTags: [
@@ -76,27 +76,28 @@ export class BlogService {
       page = 1,
       limit = 10,
       search,
-      sortBy,
-      sortOrder,
       status,
       tag,
+      sort,
+      sortBy,
+      sortOrder,
     } = query;
 
     const where: Prisma.BlogPostWhereInput = {
       ...(status && { status }),
       ...(tag && { tags: { has: tag } }),
-      ...(search && {
-        OR: [
-          { title: { contains: search, mode: 'insensitive' } },
-          { excerpt: { contains: search, mode: 'insensitive' } },
-        ],
-      }),
     };
+
+    if (search) {
+      return this.searchBlogPosts(search, where, page, limit);
+    }
+
+    const orderBy = this.resolveSortOrder(sort, sortBy, sortOrder);
 
     const [data, total] = await this.prisma.$transaction([
       this.prisma.blogPost.findMany({
         where,
-        orderBy: { [sortBy ?? 'createdAt']: sortOrder ?? 'desc' },
+        orderBy,
         skip: query.skip,
         take: limit,
       }),
@@ -104,6 +105,69 @@ export class BlogService {
     ]);
 
     return new PaginatedResponseDto(data, total, page, limit);
+  }
+
+  /** Homepage/sidebar widget-এর জন্য — pagination wrapper ছাড়া সরাসরি array */
+  async findPopular(limit = 5) {
+    return this.prisma.blogPost.findMany({
+      where: { status: Status.PUBLISHED },
+      orderBy: { viewCount: 'desc' },
+      take: limit,
+    });
+  }
+
+  private resolveSortOrder(
+    sort?: BlogSortOption,
+    sortBy?: string,
+    sortOrder?: 'asc' | 'desc',
+  ): Prisma.BlogPostOrderByWithRelationInput {
+    switch (sort) {
+      case BlogSortOption.POPULAR:
+        return { viewCount: 'desc' };
+      case BlogSortOption.OLDEST:
+        return { createdAt: 'asc' };
+      case BlogSortOption.LATEST:
+        return { createdAt: 'desc' };
+      default:
+        return { [sortBy ?? 'createdAt']: sortOrder ?? 'desc' };
+    }
+  }
+
+  private async searchBlogPosts(
+    search: string,
+    where: Prisma.BlogPostWhereInput,
+    page: number,
+    limit: number,
+  ) {
+    const ranked = await this.prisma.$queryRaw<{ id: string }[]>`
+      SELECT id FROM blog_posts
+      WHERE "searchVector" @@ websearch_to_tsquery('english', ${search})
+      ORDER BY ts_rank("searchVector", websearch_to_tsquery('english', ${search})) DESC
+    `;
+
+    if (ranked.length === 0) {
+      return new PaginatedResponseDto([], 0, page, limit);
+    }
+
+    const rankedIds = ranked.map((r) => r.id);
+    const rankIndex = new Map(rankedIds.map((id, idx) => [id, idx]));
+
+    const [matches, total] = await this.prisma.$transaction([
+      this.prisma.blogPost.findMany({
+        where: { ...where, id: { in: rankedIds } },
+      }),
+      this.prisma.blogPost.count({
+        where: { ...where, id: { in: rankedIds } },
+      }),
+    ]);
+
+    const sorted = matches.sort(
+      (a, b) => rankIndex.get(a.id)! - rankIndex.get(b.id)!,
+    );
+    const start = (page - 1) * limit;
+    const paginated = sorted.slice(start, start + limit);
+
+    return new PaginatedResponseDto(paginated, total, page, limit);
   }
 
   async findBySlug(slug: string) {

@@ -89,6 +89,8 @@ model Project {
   comments     Comment[]
   reactions    Reaction[]
 
+  searchVector Unsupported("tsvector")?
+
   @@index([status, order])
   @@map("projects")
 }
@@ -167,6 +169,8 @@ model BlogPost {
 
   comments  Comment[]
   reactions Reaction[]
+
+  searchVector Unsupported("tsvector")?
 
   @@index([status, createdAt])
   @@map("blog_posts")
