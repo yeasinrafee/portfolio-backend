@@ -1,4 +1,9 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import {
+  Injectable,
+  OnModuleInit,
+  OnModuleDestroy,
+  Logger,
+} from '@nestjs/common';
 import { PrismaClient } from '../generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
@@ -7,6 +12,8 @@ export class PrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy
 {
+  private readonly logger = new Logger(PrismaService.name);
+
   constructor() {
     const adapter = new PrismaPg({
       connectionString: process.env.DATABASE_URL,
@@ -15,12 +22,19 @@ export class PrismaService
   }
 
   async onModuleInit() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    await this.$connect();
+    try {
+      await this.$connect();
+      this.logger.log('Database connected successfully');
+    } catch (error) {
+      this.logger.error(
+        'Failed to connect to database',
+        error instanceof Error ? error.stack : String(error),
+      );
+      throw error;
+    }
   }
 
   async onModuleDestroy() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     await this.$disconnect();
   }
 }
