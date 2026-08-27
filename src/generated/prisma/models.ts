@@ -11,6 +11,7 @@
 export type * from './models/User.js'
 export type * from './models/Technology.js'
 export type * from './models/Project.js'
+export type * from './models/ProjectImage.js'
 export type * from './models/Skill.js'
 export type * from './models/Experience.js'
 export type * from './models/Education.js'

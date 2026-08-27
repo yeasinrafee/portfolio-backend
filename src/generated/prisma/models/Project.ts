@@ -52,6 +52,10 @@ export type ProjectMinAggregateOutputType = {
   viewCount: number | null
   startDate: Date | null
   endDate: Date | null
+  metaTitle: string | null
+  metaDescription: string | null
+  ogImage: string | null
+  canonicalUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,6 +76,10 @@ export type ProjectMaxAggregateOutputType = {
   viewCount: number | null
   startDate: Date | null
   endDate: Date | null
+  metaTitle: string | null
+  metaDescription: string | null
+  ogImage: string | null
+  canonicalUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -82,7 +90,6 @@ export type ProjectCountAggregateOutputType = {
   slug: number
   description: number
   shortSummary: number
-  images: number
   liveUrl: number
   repoUrl: number
   clientName: number
@@ -93,6 +100,11 @@ export type ProjectCountAggregateOutputType = {
   viewCount: number
   startDate: number
   endDate: number
+  metaTitle: number
+  metaDescription: number
+  metaKeywords: number
+  ogImage: number
+  canonicalUrl: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -125,6 +137,10 @@ export type ProjectMinAggregateInputType = {
   viewCount?: true
   startDate?: true
   endDate?: true
+  metaTitle?: true
+  metaDescription?: true
+  ogImage?: true
+  canonicalUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -145,6 +161,10 @@ export type ProjectMaxAggregateInputType = {
   viewCount?: true
   startDate?: true
   endDate?: true
+  metaTitle?: true
+  metaDescription?: true
+  ogImage?: true
+  canonicalUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -155,7 +175,6 @@ export type ProjectCountAggregateInputType = {
   slug?: true
   description?: true
   shortSummary?: true
-  images?: true
   liveUrl?: true
   repoUrl?: true
   clientName?: true
@@ -166,6 +185,11 @@ export type ProjectCountAggregateInputType = {
   viewCount?: true
   startDate?: true
   endDate?: true
+  metaTitle?: true
+  metaDescription?: true
+  metaKeywords?: true
+  ogImage?: true
+  canonicalUrl?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -263,7 +287,6 @@ export type ProjectGroupByOutputType = {
   slug: string
   description: string
   shortSummary: string | null
-  images: string[]
   liveUrl: string | null
   repoUrl: string | null
   clientName: string | null
@@ -274,6 +297,11 @@ export type ProjectGroupByOutputType = {
   viewCount: number
   startDate: Date | null
   endDate: Date | null
+  metaTitle: string | null
+  metaDescription: string | null
+  metaKeywords: string[]
+  ogImage: string | null
+  canonicalUrl: string | null
   createdAt: Date
   updatedAt: Date
   _count: ProjectCountAggregateOutputType | null
@@ -307,7 +335,6 @@ export type ProjectWhereInput = {
   slug?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringFilter<"Project"> | string
   shortSummary?: Prisma.StringNullableFilter<"Project"> | string | null
-  images?: Prisma.StringNullableListFilter<"Project">
   liveUrl?: Prisma.StringNullableFilter<"Project"> | string | null
   repoUrl?: Prisma.StringNullableFilter<"Project"> | string | null
   clientName?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -318,8 +345,14 @@ export type ProjectWhereInput = {
   viewCount?: Prisma.IntFilter<"Project"> | number
   startDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   endDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  metaTitle?: Prisma.StringNullableFilter<"Project"> | string | null
+  metaDescription?: Prisma.StringNullableFilter<"Project"> | string | null
+  metaKeywords?: Prisma.StringNullableListFilter<"Project">
+  ogImage?: Prisma.StringNullableFilter<"Project"> | string | null
+  canonicalUrl?: Prisma.StringNullableFilter<"Project"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  images?: Prisma.ProjectImageListRelationFilter
   technologies?: Prisma.TechnologyListRelationFilter
   comments?: Prisma.CommentListRelationFilter
   reactions?: Prisma.ReactionListRelationFilter
@@ -331,7 +364,6 @@ export type ProjectOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   shortSummary?: Prisma.SortOrderInput | Prisma.SortOrder
-  images?: Prisma.SortOrder
   liveUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   repoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   clientName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -342,8 +374,14 @@ export type ProjectOrderByWithRelationInput = {
   viewCount?: Prisma.SortOrder
   startDate?: Prisma.SortOrderInput | Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  images?: Prisma.ProjectImageOrderByRelationAggregateInput
   technologies?: Prisma.TechnologyOrderByRelationAggregateInput
   comments?: Prisma.CommentOrderByRelationAggregateInput
   reactions?: Prisma.ReactionOrderByRelationAggregateInput
@@ -358,7 +396,6 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringFilter<"Project"> | string
   shortSummary?: Prisma.StringNullableFilter<"Project"> | string | null
-  images?: Prisma.StringNullableListFilter<"Project">
   liveUrl?: Prisma.StringNullableFilter<"Project"> | string | null
   repoUrl?: Prisma.StringNullableFilter<"Project"> | string | null
   clientName?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -369,8 +406,14 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   viewCount?: Prisma.IntFilter<"Project"> | number
   startDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   endDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  metaTitle?: Prisma.StringNullableFilter<"Project"> | string | null
+  metaDescription?: Prisma.StringNullableFilter<"Project"> | string | null
+  metaKeywords?: Prisma.StringNullableListFilter<"Project">
+  ogImage?: Prisma.StringNullableFilter<"Project"> | string | null
+  canonicalUrl?: Prisma.StringNullableFilter<"Project"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  images?: Prisma.ProjectImageListRelationFilter
   technologies?: Prisma.TechnologyListRelationFilter
   comments?: Prisma.CommentListRelationFilter
   reactions?: Prisma.ReactionListRelationFilter
@@ -382,7 +425,6 @@ export type ProjectOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   shortSummary?: Prisma.SortOrderInput | Prisma.SortOrder
-  images?: Prisma.SortOrder
   liveUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   repoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   clientName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -393,6 +435,11 @@ export type ProjectOrderByWithAggregationInput = {
   viewCount?: Prisma.SortOrder
   startDate?: Prisma.SortOrderInput | Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProjectCountOrderByAggregateInput
@@ -411,7 +458,6 @@ export type ProjectScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"Project"> | string
   description?: Prisma.StringWithAggregatesFilter<"Project"> | string
   shortSummary?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
-  images?: Prisma.StringNullableListFilter<"Project">
   liveUrl?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   repoUrl?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   clientName?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
@@ -422,6 +468,11 @@ export type ProjectScalarWhereWithAggregatesInput = {
   viewCount?: Prisma.IntWithAggregatesFilter<"Project"> | number
   startDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  metaTitle?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  metaDescription?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  metaKeywords?: Prisma.StringNullableListFilter<"Project">
+  ogImage?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  canonicalUrl?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
 }
@@ -432,7 +483,6 @@ export type ProjectCreateInput = {
   slug: string
   description: string
   shortSummary?: string | null
-  images?: Prisma.ProjectCreateimagesInput | string[]
   liveUrl?: string | null
   repoUrl?: string | null
   clientName?: string | null
@@ -443,8 +493,14 @@ export type ProjectCreateInput = {
   viewCount?: number
   startDate?: Date | string | null
   endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  images?: Prisma.ProjectImageCreateNestedManyWithoutProjectInput
   technologies?: Prisma.TechnologyCreateNestedManyWithoutProjectsInput
   comments?: Prisma.CommentCreateNestedManyWithoutProjectInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutProjectInput
@@ -456,7 +512,6 @@ export type ProjectUncheckedCreateInput = {
   slug: string
   description: string
   shortSummary?: string | null
-  images?: Prisma.ProjectCreateimagesInput | string[]
   liveUrl?: string | null
   repoUrl?: string | null
   clientName?: string | null
@@ -467,8 +522,14 @@ export type ProjectUncheckedCreateInput = {
   viewCount?: number
   startDate?: Date | string | null
   endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  images?: Prisma.ProjectImageUncheckedCreateNestedManyWithoutProjectInput
   technologies?: Prisma.TechnologyUncheckedCreateNestedManyWithoutProjectsInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutProjectInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutProjectInput
@@ -480,7 +541,6 @@ export type ProjectUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -491,8 +551,14 @@ export type ProjectUpdateInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProjectImageUpdateManyWithoutProjectNestedInput
   technologies?: Prisma.TechnologyUpdateManyWithoutProjectsNestedInput
   comments?: Prisma.CommentUpdateManyWithoutProjectNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutProjectNestedInput
@@ -504,7 +570,6 @@ export type ProjectUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -515,8 +580,14 @@ export type ProjectUncheckedUpdateInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProjectImageUncheckedUpdateManyWithoutProjectNestedInput
   technologies?: Prisma.TechnologyUncheckedUpdateManyWithoutProjectsNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutProjectNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutProjectNestedInput
@@ -528,7 +599,6 @@ export type ProjectCreateManyInput = {
   slug: string
   description: string
   shortSummary?: string | null
-  images?: Prisma.ProjectCreateimagesInput | string[]
   liveUrl?: string | null
   repoUrl?: string | null
   clientName?: string | null
@@ -539,6 +609,11 @@ export type ProjectCreateManyInput = {
   viewCount?: number
   startDate?: Date | string | null
   endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -549,7 +624,6 @@ export type ProjectUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -560,6 +634,11 @@ export type ProjectUpdateManyMutationInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -570,7 +649,6 @@ export type ProjectUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -581,6 +659,11 @@ export type ProjectUncheckedUpdateManyInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -609,7 +692,6 @@ export type ProjectCountOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   shortSummary?: Prisma.SortOrder
-  images?: Prisma.SortOrder
   liveUrl?: Prisma.SortOrder
   repoUrl?: Prisma.SortOrder
   clientName?: Prisma.SortOrder
@@ -620,6 +702,11 @@ export type ProjectCountOrderByAggregateInput = {
   viewCount?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
+  metaTitle?: Prisma.SortOrder
+  metaDescription?: Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -645,6 +732,10 @@ export type ProjectMaxOrderByAggregateInput = {
   viewCount?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
+  metaTitle?: Prisma.SortOrder
+  metaDescription?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -665,6 +756,10 @@ export type ProjectMinOrderByAggregateInput = {
   viewCount?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
+  metaTitle?: Prisma.SortOrder
+  metaDescription?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -672,6 +767,11 @@ export type ProjectMinOrderByAggregateInput = {
 export type ProjectSumOrderByAggregateInput = {
   order?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
+}
+
+export type ProjectScalarRelationFilter = {
+  is?: Prisma.ProjectWhereInput
+  isNot?: Prisma.ProjectWhereInput
 }
 
 export type ProjectNullableScalarRelationFilter = {
@@ -717,17 +817,31 @@ export type ProjectUncheckedUpdateManyWithoutTechnologiesNestedInput = {
   deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
-export type ProjectCreateimagesInput = {
+export type ProjectCreatemetaKeywordsInput = {
   set: string[]
-}
-
-export type ProjectUpdateimagesInput = {
-  set?: string[]
-  push?: string | string[]
 }
 
 export type EnumStatusFieldUpdateOperationsInput = {
   set?: $Enums.Status
+}
+
+export type ProjectUpdatemetaKeywordsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type ProjectCreateNestedOneWithoutImagesInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutImagesInput, Prisma.ProjectUncheckedCreateWithoutImagesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutImagesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutImagesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutImagesInput, Prisma.ProjectUncheckedCreateWithoutImagesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutImagesInput
+  upsert?: Prisma.ProjectUpsertWithoutImagesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutImagesInput, Prisma.ProjectUpdateWithoutImagesInput>, Prisma.ProjectUncheckedUpdateWithoutImagesInput>
 }
 
 export type ProjectCreateNestedOneWithoutCommentsInput = {
@@ -768,7 +882,6 @@ export type ProjectCreateWithoutTechnologiesInput = {
   slug: string
   description: string
   shortSummary?: string | null
-  images?: Prisma.ProjectCreateimagesInput | string[]
   liveUrl?: string | null
   repoUrl?: string | null
   clientName?: string | null
@@ -779,8 +892,14 @@ export type ProjectCreateWithoutTechnologiesInput = {
   viewCount?: number
   startDate?: Date | string | null
   endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  images?: Prisma.ProjectImageCreateNestedManyWithoutProjectInput
   comments?: Prisma.CommentCreateNestedManyWithoutProjectInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutProjectInput
 }
@@ -791,7 +910,6 @@ export type ProjectUncheckedCreateWithoutTechnologiesInput = {
   slug: string
   description: string
   shortSummary?: string | null
-  images?: Prisma.ProjectCreateimagesInput | string[]
   liveUrl?: string | null
   repoUrl?: string | null
   clientName?: string | null
@@ -802,8 +920,14 @@ export type ProjectUncheckedCreateWithoutTechnologiesInput = {
   viewCount?: number
   startDate?: Date | string | null
   endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  images?: Prisma.ProjectImageUncheckedCreateNestedManyWithoutProjectInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutProjectInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -838,7 +962,6 @@ export type ProjectScalarWhereInput = {
   slug?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringFilter<"Project"> | string
   shortSummary?: Prisma.StringNullableFilter<"Project"> | string | null
-  images?: Prisma.StringNullableListFilter<"Project">
   liveUrl?: Prisma.StringNullableFilter<"Project"> | string | null
   repoUrl?: Prisma.StringNullableFilter<"Project"> | string | null
   clientName?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -849,17 +972,21 @@ export type ProjectScalarWhereInput = {
   viewCount?: Prisma.IntFilter<"Project"> | number
   startDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   endDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  metaTitle?: Prisma.StringNullableFilter<"Project"> | string | null
+  metaDescription?: Prisma.StringNullableFilter<"Project"> | string | null
+  metaKeywords?: Prisma.StringNullableListFilter<"Project">
+  ogImage?: Prisma.StringNullableFilter<"Project"> | string | null
+  canonicalUrl?: Prisma.StringNullableFilter<"Project"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
 }
 
-export type ProjectCreateWithoutCommentsInput = {
+export type ProjectCreateWithoutImagesInput = {
   id?: string
   title: string
   slug: string
   description: string
   shortSummary?: string | null
-  images?: Prisma.ProjectCreateimagesInput | string[]
   liveUrl?: string | null
   repoUrl?: string | null
   clientName?: string | null
@@ -870,8 +997,142 @@ export type ProjectCreateWithoutCommentsInput = {
   viewCount?: number
   startDate?: Date | string | null
   endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  technologies?: Prisma.TechnologyCreateNestedManyWithoutProjectsInput
+  comments?: Prisma.CommentCreateNestedManyWithoutProjectInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutImagesInput = {
+  id?: string
+  title: string
+  slug: string
+  description: string
+  shortSummary?: string | null
+  liveUrl?: string | null
+  repoUrl?: string | null
+  clientName?: string | null
+  category?: string | null
+  featured?: boolean
+  order?: number
+  status?: $Enums.Status
+  viewCount?: number
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  technologies?: Prisma.TechnologyUncheckedCreateNestedManyWithoutProjectsInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutProjectInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutImagesInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutImagesInput, Prisma.ProjectUncheckedCreateWithoutImagesInput>
+}
+
+export type ProjectUpsertWithoutImagesInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutImagesInput, Prisma.ProjectUncheckedUpdateWithoutImagesInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutImagesInput, Prisma.ProjectUncheckedCreateWithoutImagesInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutImagesInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutImagesInput, Prisma.ProjectUncheckedUpdateWithoutImagesInput>
+}
+
+export type ProjectUpdateWithoutImagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  technologies?: Prisma.TechnologyUpdateManyWithoutProjectsNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutProjectNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutImagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  technologies?: Prisma.TechnologyUncheckedUpdateManyWithoutProjectsNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutProjectNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutCommentsInput = {
+  id?: string
+  title: string
+  slug: string
+  description: string
+  shortSummary?: string | null
+  liveUrl?: string | null
+  repoUrl?: string | null
+  clientName?: string | null
+  category?: string | null
+  featured?: boolean
+  order?: number
+  status?: $Enums.Status
+  viewCount?: number
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  images?: Prisma.ProjectImageCreateNestedManyWithoutProjectInput
   technologies?: Prisma.TechnologyCreateNestedManyWithoutProjectsInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutProjectInput
 }
@@ -882,7 +1143,6 @@ export type ProjectUncheckedCreateWithoutCommentsInput = {
   slug: string
   description: string
   shortSummary?: string | null
-  images?: Prisma.ProjectCreateimagesInput | string[]
   liveUrl?: string | null
   repoUrl?: string | null
   clientName?: string | null
@@ -893,8 +1153,14 @@ export type ProjectUncheckedCreateWithoutCommentsInput = {
   viewCount?: number
   startDate?: Date | string | null
   endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  images?: Prisma.ProjectImageUncheckedCreateNestedManyWithoutProjectInput
   technologies?: Prisma.TechnologyUncheckedCreateNestedManyWithoutProjectsInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -921,7 +1187,6 @@ export type ProjectUpdateWithoutCommentsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -932,8 +1197,14 @@ export type ProjectUpdateWithoutCommentsInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProjectImageUpdateManyWithoutProjectNestedInput
   technologies?: Prisma.TechnologyUpdateManyWithoutProjectsNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutProjectNestedInput
 }
@@ -944,7 +1215,6 @@ export type ProjectUncheckedUpdateWithoutCommentsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -955,8 +1225,14 @@ export type ProjectUncheckedUpdateWithoutCommentsInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProjectImageUncheckedUpdateManyWithoutProjectNestedInput
   technologies?: Prisma.TechnologyUncheckedUpdateManyWithoutProjectsNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -967,7 +1243,6 @@ export type ProjectCreateWithoutReactionsInput = {
   slug: string
   description: string
   shortSummary?: string | null
-  images?: Prisma.ProjectCreateimagesInput | string[]
   liveUrl?: string | null
   repoUrl?: string | null
   clientName?: string | null
@@ -978,8 +1253,14 @@ export type ProjectCreateWithoutReactionsInput = {
   viewCount?: number
   startDate?: Date | string | null
   endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  images?: Prisma.ProjectImageCreateNestedManyWithoutProjectInput
   technologies?: Prisma.TechnologyCreateNestedManyWithoutProjectsInput
   comments?: Prisma.CommentCreateNestedManyWithoutProjectInput
 }
@@ -990,7 +1271,6 @@ export type ProjectUncheckedCreateWithoutReactionsInput = {
   slug: string
   description: string
   shortSummary?: string | null
-  images?: Prisma.ProjectCreateimagesInput | string[]
   liveUrl?: string | null
   repoUrl?: string | null
   clientName?: string | null
@@ -1001,8 +1281,14 @@ export type ProjectUncheckedCreateWithoutReactionsInput = {
   viewCount?: number
   startDate?: Date | string | null
   endDate?: Date | string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: Prisma.ProjectCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  images?: Prisma.ProjectImageUncheckedCreateNestedManyWithoutProjectInput
   technologies?: Prisma.TechnologyUncheckedCreateNestedManyWithoutProjectsInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1029,7 +1315,6 @@ export type ProjectUpdateWithoutReactionsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1040,8 +1325,14 @@ export type ProjectUpdateWithoutReactionsInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProjectImageUpdateManyWithoutProjectNestedInput
   technologies?: Prisma.TechnologyUpdateManyWithoutProjectsNestedInput
   comments?: Prisma.CommentUpdateManyWithoutProjectNestedInput
 }
@@ -1052,7 +1343,6 @@ export type ProjectUncheckedUpdateWithoutReactionsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1063,8 +1353,14 @@ export type ProjectUncheckedUpdateWithoutReactionsInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProjectImageUncheckedUpdateManyWithoutProjectNestedInput
   technologies?: Prisma.TechnologyUncheckedUpdateManyWithoutProjectsNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1075,7 +1371,6 @@ export type ProjectUpdateWithoutTechnologiesInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1086,8 +1381,14 @@ export type ProjectUpdateWithoutTechnologiesInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProjectImageUpdateManyWithoutProjectNestedInput
   comments?: Prisma.CommentUpdateManyWithoutProjectNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutProjectNestedInput
 }
@@ -1098,7 +1399,6 @@ export type ProjectUncheckedUpdateWithoutTechnologiesInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1109,8 +1409,14 @@ export type ProjectUncheckedUpdateWithoutTechnologiesInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProjectImageUncheckedUpdateManyWithoutProjectNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutProjectNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1121,7 +1427,6 @@ export type ProjectUncheckedUpdateManyWithoutTechnologiesInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shortSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  images?: Prisma.ProjectUpdateimagesInput | string[]
   liveUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1132,6 +1437,11 @@ export type ProjectUncheckedUpdateManyWithoutTechnologiesInput = {
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.ProjectUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1142,12 +1452,14 @@ export type ProjectUncheckedUpdateManyWithoutTechnologiesInput = {
  */
 
 export type ProjectCountOutputType = {
+  images: number
   technologies: number
   comments: number
   reactions: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  images?: boolean | ProjectCountOutputTypeCountImagesArgs
   technologies?: boolean | ProjectCountOutputTypeCountTechnologiesArgs
   comments?: boolean | ProjectCountOutputTypeCountCommentsArgs
   reactions?: boolean | ProjectCountOutputTypeCountReactionsArgs
@@ -1161,6 +1473,13 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the ProjectCountOutputType
    */
   select?: Prisma.ProjectCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectImageWhereInput
 }
 
 /**
@@ -1191,7 +1510,6 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   slug?: boolean
   description?: boolean
   shortSummary?: boolean
-  images?: boolean
   liveUrl?: boolean
   repoUrl?: boolean
   clientName?: boolean
@@ -1202,8 +1520,14 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   viewCount?: boolean
   startDate?: boolean
   endDate?: boolean
+  metaTitle?: boolean
+  metaDescription?: boolean
+  metaKeywords?: boolean
+  ogImage?: boolean
+  canonicalUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  images?: boolean | Prisma.Project$imagesArgs<ExtArgs>
   technologies?: boolean | Prisma.Project$technologiesArgs<ExtArgs>
   comments?: boolean | Prisma.Project$commentsArgs<ExtArgs>
   reactions?: boolean | Prisma.Project$reactionsArgs<ExtArgs>
@@ -1216,7 +1540,6 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   slug?: boolean
   description?: boolean
   shortSummary?: boolean
-  images?: boolean
   liveUrl?: boolean
   repoUrl?: boolean
   clientName?: boolean
@@ -1227,6 +1550,11 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   viewCount?: boolean
   startDate?: boolean
   endDate?: boolean
+  metaTitle?: boolean
+  metaDescription?: boolean
+  metaKeywords?: boolean
+  ogImage?: boolean
+  canonicalUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["project"]>
@@ -1237,7 +1565,6 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   slug?: boolean
   description?: boolean
   shortSummary?: boolean
-  images?: boolean
   liveUrl?: boolean
   repoUrl?: boolean
   clientName?: boolean
@@ -1248,6 +1575,11 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   viewCount?: boolean
   startDate?: boolean
   endDate?: boolean
+  metaTitle?: boolean
+  metaDescription?: boolean
+  metaKeywords?: boolean
+  ogImage?: boolean
+  canonicalUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["project"]>
@@ -1258,7 +1590,6 @@ export type ProjectSelectScalar = {
   slug?: boolean
   description?: boolean
   shortSummary?: boolean
-  images?: boolean
   liveUrl?: boolean
   repoUrl?: boolean
   clientName?: boolean
@@ -1269,12 +1600,18 @@ export type ProjectSelectScalar = {
   viewCount?: boolean
   startDate?: boolean
   endDate?: boolean
+  metaTitle?: boolean
+  metaDescription?: boolean
+  metaKeywords?: boolean
+  ogImage?: boolean
+  canonicalUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "shortSummary" | "images" | "liveUrl" | "repoUrl" | "clientName" | "category" | "featured" | "order" | "status" | "viewCount" | "startDate" | "endDate" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "description" | "shortSummary" | "liveUrl" | "repoUrl" | "clientName" | "category" | "featured" | "order" | "status" | "viewCount" | "startDate" | "endDate" | "metaTitle" | "metaDescription" | "metaKeywords" | "ogImage" | "canonicalUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  images?: boolean | Prisma.Project$imagesArgs<ExtArgs>
   technologies?: boolean | Prisma.Project$technologiesArgs<ExtArgs>
   comments?: boolean | Prisma.Project$commentsArgs<ExtArgs>
   reactions?: boolean | Prisma.Project$reactionsArgs<ExtArgs>
@@ -1286,6 +1623,7 @@ export type ProjectIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Project"
   objects: {
+    images: Prisma.$ProjectImagePayload<ExtArgs>[]
     technologies: Prisma.$TechnologyPayload<ExtArgs>[]
     comments: Prisma.$CommentPayload<ExtArgs>[]
     reactions: Prisma.$ReactionPayload<ExtArgs>[]
@@ -1296,7 +1634,6 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     slug: string
     description: string
     shortSummary: string | null
-    images: string[]
     liveUrl: string | null
     repoUrl: string | null
     clientName: string | null
@@ -1307,6 +1644,11 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     viewCount: number
     startDate: Date | null
     endDate: Date | null
+    metaTitle: string | null
+    metaDescription: string | null
+    metaKeywords: string[]
+    ogImage: string | null
+    canonicalUrl: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["project"]>
@@ -1703,6 +2045,7 @@ readonly fields: ProjectFieldRefs;
  */
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  images<T extends Prisma.Project$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   technologies<T extends Prisma.Project$technologiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$technologiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TechnologyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   comments<T extends Prisma.Project$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reactions<T extends Prisma.Project$reactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$reactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1740,7 +2083,6 @@ export interface ProjectFieldRefs {
   readonly slug: Prisma.FieldRef<"Project", 'String'>
   readonly description: Prisma.FieldRef<"Project", 'String'>
   readonly shortSummary: Prisma.FieldRef<"Project", 'String'>
-  readonly images: Prisma.FieldRef<"Project", 'String[]'>
   readonly liveUrl: Prisma.FieldRef<"Project", 'String'>
   readonly repoUrl: Prisma.FieldRef<"Project", 'String'>
   readonly clientName: Prisma.FieldRef<"Project", 'String'>
@@ -1751,6 +2093,11 @@ export interface ProjectFieldRefs {
   readonly viewCount: Prisma.FieldRef<"Project", 'Int'>
   readonly startDate: Prisma.FieldRef<"Project", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly metaTitle: Prisma.FieldRef<"Project", 'String'>
+  readonly metaDescription: Prisma.FieldRef<"Project", 'String'>
+  readonly metaKeywords: Prisma.FieldRef<"Project", 'String[]'>
+  readonly ogImage: Prisma.FieldRef<"Project", 'String'>
+  readonly canonicalUrl: Prisma.FieldRef<"Project", 'String'>
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Project", 'DateTime'>
 }
@@ -2143,6 +2490,30 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Projects to delete.
    */
   limit?: number
+}
+
+/**
+ * Project.images
+ */
+export type Project$imagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectImage
+   */
+  select?: Prisma.ProjectImageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectImage
+   */
+  omit?: Prisma.ProjectImageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectImageInclude<ExtArgs> | null
+  where?: Prisma.ProjectImageWhereInput
+  orderBy?: Prisma.ProjectImageOrderByWithRelationInput | Prisma.ProjectImageOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectImageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectImageScalarFieldEnum | Prisma.ProjectImageScalarFieldEnum[]
 }
 
 /**

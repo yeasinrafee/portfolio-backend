@@ -43,11 +43,14 @@ export type BlogPostMinAggregateOutputType = {
   excerpt: string | null
   content: string | null
   coverImage: string | null
+  coverImageAlt: string | null
   status: $Enums.Status | null
   viewCount: number | null
   readingTimeMins: number | null
   metaTitle: string | null
   metaDescription: string | null
+  ogImage: string | null
+  canonicalUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,11 +62,14 @@ export type BlogPostMaxAggregateOutputType = {
   excerpt: string | null
   content: string | null
   coverImage: string | null
+  coverImageAlt: string | null
   status: $Enums.Status | null
   viewCount: number | null
   readingTimeMins: number | null
   metaTitle: string | null
   metaDescription: string | null
+  ogImage: string | null
+  canonicalUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -75,12 +81,16 @@ export type BlogPostCountAggregateOutputType = {
   excerpt: number
   content: number
   coverImage: number
+  coverImageAlt: number
   tags: number
   status: number
   viewCount: number
   readingTimeMins: number
   metaTitle: number
   metaDescription: number
+  metaKeywords: number
+  ogImage: number
+  canonicalUrl: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -104,11 +114,14 @@ export type BlogPostMinAggregateInputType = {
   excerpt?: true
   content?: true
   coverImage?: true
+  coverImageAlt?: true
   status?: true
   viewCount?: true
   readingTimeMins?: true
   metaTitle?: true
   metaDescription?: true
+  ogImage?: true
+  canonicalUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -120,11 +133,14 @@ export type BlogPostMaxAggregateInputType = {
   excerpt?: true
   content?: true
   coverImage?: true
+  coverImageAlt?: true
   status?: true
   viewCount?: true
   readingTimeMins?: true
   metaTitle?: true
   metaDescription?: true
+  ogImage?: true
+  canonicalUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -136,12 +152,16 @@ export type BlogPostCountAggregateInputType = {
   excerpt?: true
   content?: true
   coverImage?: true
+  coverImageAlt?: true
   tags?: true
   status?: true
   viewCount?: true
   readingTimeMins?: true
   metaTitle?: true
   metaDescription?: true
+  metaKeywords?: true
+  ogImage?: true
+  canonicalUrl?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -240,12 +260,16 @@ export type BlogPostGroupByOutputType = {
   excerpt: string | null
   content: string
   coverImage: string | null
+  coverImageAlt: string | null
   tags: string[]
   status: $Enums.Status
   viewCount: number
   readingTimeMins: number | null
   metaTitle: string | null
   metaDescription: string | null
+  metaKeywords: string[]
+  ogImage: string | null
+  canonicalUrl: string | null
   createdAt: Date
   updatedAt: Date
   _count: BlogPostCountAggregateOutputType | null
@@ -280,12 +304,16 @@ export type BlogPostWhereInput = {
   excerpt?: Prisma.StringNullableFilter<"BlogPost"> | string | null
   content?: Prisma.StringFilter<"BlogPost"> | string
   coverImage?: Prisma.StringNullableFilter<"BlogPost"> | string | null
+  coverImageAlt?: Prisma.StringNullableFilter<"BlogPost"> | string | null
   tags?: Prisma.StringNullableListFilter<"BlogPost">
   status?: Prisma.EnumStatusFilter<"BlogPost"> | $Enums.Status
   viewCount?: Prisma.IntFilter<"BlogPost"> | number
   readingTimeMins?: Prisma.IntNullableFilter<"BlogPost"> | number | null
   metaTitle?: Prisma.StringNullableFilter<"BlogPost"> | string | null
   metaDescription?: Prisma.StringNullableFilter<"BlogPost"> | string | null
+  metaKeywords?: Prisma.StringNullableListFilter<"BlogPost">
+  ogImage?: Prisma.StringNullableFilter<"BlogPost"> | string | null
+  canonicalUrl?: Prisma.StringNullableFilter<"BlogPost"> | string | null
   createdAt?: Prisma.DateTimeFilter<"BlogPost"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BlogPost"> | Date | string
   comments?: Prisma.CommentListRelationFilter
@@ -299,12 +327,16 @@ export type BlogPostOrderByWithRelationInput = {
   excerpt?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
   coverImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  coverImageAlt?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   status?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   readingTimeMins?: Prisma.SortOrderInput | Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   comments?: Prisma.CommentOrderByRelationAggregateInput
@@ -321,12 +353,16 @@ export type BlogPostWhereUniqueInput = Prisma.AtLeast<{
   excerpt?: Prisma.StringNullableFilter<"BlogPost"> | string | null
   content?: Prisma.StringFilter<"BlogPost"> | string
   coverImage?: Prisma.StringNullableFilter<"BlogPost"> | string | null
+  coverImageAlt?: Prisma.StringNullableFilter<"BlogPost"> | string | null
   tags?: Prisma.StringNullableListFilter<"BlogPost">
   status?: Prisma.EnumStatusFilter<"BlogPost"> | $Enums.Status
   viewCount?: Prisma.IntFilter<"BlogPost"> | number
   readingTimeMins?: Prisma.IntNullableFilter<"BlogPost"> | number | null
   metaTitle?: Prisma.StringNullableFilter<"BlogPost"> | string | null
   metaDescription?: Prisma.StringNullableFilter<"BlogPost"> | string | null
+  metaKeywords?: Prisma.StringNullableListFilter<"BlogPost">
+  ogImage?: Prisma.StringNullableFilter<"BlogPost"> | string | null
+  canonicalUrl?: Prisma.StringNullableFilter<"BlogPost"> | string | null
   createdAt?: Prisma.DateTimeFilter<"BlogPost"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BlogPost"> | Date | string
   comments?: Prisma.CommentListRelationFilter
@@ -340,12 +376,16 @@ export type BlogPostOrderByWithAggregationInput = {
   excerpt?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
   coverImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  coverImageAlt?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   status?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   readingTimeMins?: Prisma.SortOrderInput | Prisma.SortOrder
   metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.BlogPostCountOrderByAggregateInput
@@ -365,12 +405,16 @@ export type BlogPostScalarWhereWithAggregatesInput = {
   excerpt?: Prisma.StringNullableWithAggregatesFilter<"BlogPost"> | string | null
   content?: Prisma.StringWithAggregatesFilter<"BlogPost"> | string
   coverImage?: Prisma.StringNullableWithAggregatesFilter<"BlogPost"> | string | null
+  coverImageAlt?: Prisma.StringNullableWithAggregatesFilter<"BlogPost"> | string | null
   tags?: Prisma.StringNullableListFilter<"BlogPost">
   status?: Prisma.EnumStatusWithAggregatesFilter<"BlogPost"> | $Enums.Status
   viewCount?: Prisma.IntWithAggregatesFilter<"BlogPost"> | number
   readingTimeMins?: Prisma.IntNullableWithAggregatesFilter<"BlogPost"> | number | null
   metaTitle?: Prisma.StringNullableWithAggregatesFilter<"BlogPost"> | string | null
   metaDescription?: Prisma.StringNullableWithAggregatesFilter<"BlogPost"> | string | null
+  metaKeywords?: Prisma.StringNullableListFilter<"BlogPost">
+  ogImage?: Prisma.StringNullableWithAggregatesFilter<"BlogPost"> | string | null
+  canonicalUrl?: Prisma.StringNullableWithAggregatesFilter<"BlogPost"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BlogPost"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"BlogPost"> | Date | string
 }
@@ -382,12 +426,16 @@ export type BlogPostCreateInput = {
   excerpt?: string | null
   content: string
   coverImage?: string | null
+  coverImageAlt?: string | null
   tags?: Prisma.BlogPostCreatetagsInput | string[]
   status?: $Enums.Status
   viewCount?: number
   readingTimeMins?: number | null
   metaTitle?: string | null
   metaDescription?: string | null
+  metaKeywords?: Prisma.BlogPostCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutBlogPostInput
@@ -401,12 +449,16 @@ export type BlogPostUncheckedCreateInput = {
   excerpt?: string | null
   content: string
   coverImage?: string | null
+  coverImageAlt?: string | null
   tags?: Prisma.BlogPostCreatetagsInput | string[]
   status?: $Enums.Status
   viewCount?: number
   readingTimeMins?: number | null
   metaTitle?: string | null
   metaDescription?: string | null
+  metaKeywords?: Prisma.BlogPostCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutBlogPostInput
@@ -420,12 +472,16 @@ export type BlogPostUpdateInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BlogPostUpdatetagsInput | string[]
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   readingTimeMins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.BlogPostUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutBlogPostNestedInput
@@ -439,12 +495,16 @@ export type BlogPostUncheckedUpdateInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BlogPostUpdatetagsInput | string[]
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   readingTimeMins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.BlogPostUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUncheckedUpdateManyWithoutBlogPostNestedInput
@@ -458,12 +518,16 @@ export type BlogPostCreateManyInput = {
   excerpt?: string | null
   content: string
   coverImage?: string | null
+  coverImageAlt?: string | null
   tags?: Prisma.BlogPostCreatetagsInput | string[]
   status?: $Enums.Status
   viewCount?: number
   readingTimeMins?: number | null
   metaTitle?: string | null
   metaDescription?: string | null
+  metaKeywords?: Prisma.BlogPostCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -475,12 +539,16 @@ export type BlogPostUpdateManyMutationInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BlogPostUpdatetagsInput | string[]
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   readingTimeMins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.BlogPostUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -492,12 +560,16 @@ export type BlogPostUncheckedUpdateManyInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BlogPostUpdatetagsInput | string[]
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   readingTimeMins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.BlogPostUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -509,12 +581,16 @@ export type BlogPostCountOrderByAggregateInput = {
   excerpt?: Prisma.SortOrder
   content?: Prisma.SortOrder
   coverImage?: Prisma.SortOrder
+  coverImageAlt?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   status?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   readingTimeMins?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -531,11 +607,14 @@ export type BlogPostMaxOrderByAggregateInput = {
   excerpt?: Prisma.SortOrder
   content?: Prisma.SortOrder
   coverImage?: Prisma.SortOrder
+  coverImageAlt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   readingTimeMins?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -547,11 +626,14 @@ export type BlogPostMinOrderByAggregateInput = {
   excerpt?: Prisma.SortOrder
   content?: Prisma.SortOrder
   coverImage?: Prisma.SortOrder
+  coverImageAlt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   readingTimeMins?: Prisma.SortOrder
   metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
+  ogImage?: Prisma.SortOrder
+  canonicalUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -570,6 +652,10 @@ export type BlogPostCreatetagsInput = {
   set: string[]
 }
 
+export type BlogPostCreatemetaKeywordsInput = {
+  set: string[]
+}
+
 export type BlogPostUpdatetagsInput = {
   set?: string[]
   push?: string | string[]
@@ -581,6 +667,11 @@ export type NullableIntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type BlogPostUpdatemetaKeywordsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type BlogPostCreateNestedOneWithoutCommentsInput = {
@@ -622,12 +713,16 @@ export type BlogPostCreateWithoutCommentsInput = {
   excerpt?: string | null
   content: string
   coverImage?: string | null
+  coverImageAlt?: string | null
   tags?: Prisma.BlogPostCreatetagsInput | string[]
   status?: $Enums.Status
   viewCount?: number
   readingTimeMins?: number | null
   metaTitle?: string | null
   metaDescription?: string | null
+  metaKeywords?: Prisma.BlogPostCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   reactions?: Prisma.ReactionCreateNestedManyWithoutBlogPostInput
@@ -640,12 +735,16 @@ export type BlogPostUncheckedCreateWithoutCommentsInput = {
   excerpt?: string | null
   content: string
   coverImage?: string | null
+  coverImageAlt?: string | null
   tags?: Prisma.BlogPostCreatetagsInput | string[]
   status?: $Enums.Status
   viewCount?: number
   readingTimeMins?: number | null
   metaTitle?: string | null
   metaDescription?: string | null
+  metaKeywords?: Prisma.BlogPostCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutBlogPostInput
@@ -674,12 +773,16 @@ export type BlogPostUpdateWithoutCommentsInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BlogPostUpdatetagsInput | string[]
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   readingTimeMins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.BlogPostUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reactions?: Prisma.ReactionUpdateManyWithoutBlogPostNestedInput
@@ -692,12 +795,16 @@ export type BlogPostUncheckedUpdateWithoutCommentsInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BlogPostUpdatetagsInput | string[]
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   readingTimeMins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.BlogPostUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutBlogPostNestedInput
@@ -710,12 +817,16 @@ export type BlogPostCreateWithoutReactionsInput = {
   excerpt?: string | null
   content: string
   coverImage?: string | null
+  coverImageAlt?: string | null
   tags?: Prisma.BlogPostCreatetagsInput | string[]
   status?: $Enums.Status
   viewCount?: number
   readingTimeMins?: number | null
   metaTitle?: string | null
   metaDescription?: string | null
+  metaKeywords?: Prisma.BlogPostCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutBlogPostInput
@@ -728,12 +839,16 @@ export type BlogPostUncheckedCreateWithoutReactionsInput = {
   excerpt?: string | null
   content: string
   coverImage?: string | null
+  coverImageAlt?: string | null
   tags?: Prisma.BlogPostCreatetagsInput | string[]
   status?: $Enums.Status
   viewCount?: number
   readingTimeMins?: number | null
   metaTitle?: string | null
   metaDescription?: string | null
+  metaKeywords?: Prisma.BlogPostCreatemetaKeywordsInput | string[]
+  ogImage?: string | null
+  canonicalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutBlogPostInput
@@ -762,12 +877,16 @@ export type BlogPostUpdateWithoutReactionsInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BlogPostUpdatetagsInput | string[]
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   readingTimeMins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.BlogPostUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutBlogPostNestedInput
@@ -780,12 +899,16 @@ export type BlogPostUncheckedUpdateWithoutReactionsInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BlogPostUpdatetagsInput | string[]
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   readingTimeMins?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.BlogPostUpdatemetaKeywordsInput | string[]
+  ogImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  canonicalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUncheckedUpdateManyWithoutBlogPostNestedInput
@@ -838,12 +961,16 @@ export type BlogPostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   excerpt?: boolean
   content?: boolean
   coverImage?: boolean
+  coverImageAlt?: boolean
   tags?: boolean
   status?: boolean
   viewCount?: boolean
   readingTimeMins?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
+  metaKeywords?: boolean
+  ogImage?: boolean
+  canonicalUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   comments?: boolean | Prisma.BlogPost$commentsArgs<ExtArgs>
@@ -858,12 +985,16 @@ export type BlogPostSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   excerpt?: boolean
   content?: boolean
   coverImage?: boolean
+  coverImageAlt?: boolean
   tags?: boolean
   status?: boolean
   viewCount?: boolean
   readingTimeMins?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
+  metaKeywords?: boolean
+  ogImage?: boolean
+  canonicalUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["blogPost"]>
@@ -875,12 +1006,16 @@ export type BlogPostSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   excerpt?: boolean
   content?: boolean
   coverImage?: boolean
+  coverImageAlt?: boolean
   tags?: boolean
   status?: boolean
   viewCount?: boolean
   readingTimeMins?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
+  metaKeywords?: boolean
+  ogImage?: boolean
+  canonicalUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["blogPost"]>
@@ -892,17 +1027,21 @@ export type BlogPostSelectScalar = {
   excerpt?: boolean
   content?: boolean
   coverImage?: boolean
+  coverImageAlt?: boolean
   tags?: boolean
   status?: boolean
   viewCount?: boolean
   readingTimeMins?: boolean
   metaTitle?: boolean
   metaDescription?: boolean
+  metaKeywords?: boolean
+  ogImage?: boolean
+  canonicalUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type BlogPostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "excerpt" | "content" | "coverImage" | "tags" | "status" | "viewCount" | "readingTimeMins" | "metaTitle" | "metaDescription" | "createdAt" | "updatedAt", ExtArgs["result"]["blogPost"]>
+export type BlogPostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "excerpt" | "content" | "coverImage" | "coverImageAlt" | "tags" | "status" | "viewCount" | "readingTimeMins" | "metaTitle" | "metaDescription" | "metaKeywords" | "ogImage" | "canonicalUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["blogPost"]>
 export type BlogPostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   comments?: boolean | Prisma.BlogPost$commentsArgs<ExtArgs>
   reactions?: boolean | Prisma.BlogPost$reactionsArgs<ExtArgs>
@@ -924,12 +1063,16 @@ export type $BlogPostPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     excerpt: string | null
     content: string
     coverImage: string | null
+    coverImageAlt: string | null
     tags: string[]
     status: $Enums.Status
     viewCount: number
     readingTimeMins: number | null
     metaTitle: string | null
     metaDescription: string | null
+    metaKeywords: string[]
+    ogImage: string | null
+    canonicalUrl: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["blogPost"]>
@@ -1363,12 +1506,16 @@ export interface BlogPostFieldRefs {
   readonly excerpt: Prisma.FieldRef<"BlogPost", 'String'>
   readonly content: Prisma.FieldRef<"BlogPost", 'String'>
   readonly coverImage: Prisma.FieldRef<"BlogPost", 'String'>
+  readonly coverImageAlt: Prisma.FieldRef<"BlogPost", 'String'>
   readonly tags: Prisma.FieldRef<"BlogPost", 'String[]'>
   readonly status: Prisma.FieldRef<"BlogPost", 'Status'>
   readonly viewCount: Prisma.FieldRef<"BlogPost", 'Int'>
   readonly readingTimeMins: Prisma.FieldRef<"BlogPost", 'Int'>
   readonly metaTitle: Prisma.FieldRef<"BlogPost", 'String'>
   readonly metaDescription: Prisma.FieldRef<"BlogPost", 'String'>
+  readonly metaKeywords: Prisma.FieldRef<"BlogPost", 'String[]'>
+  readonly ogImage: Prisma.FieldRef<"BlogPost", 'String'>
+  readonly canonicalUrl: Prisma.FieldRef<"BlogPost", 'String'>
   readonly createdAt: Prisma.FieldRef<"BlogPost", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"BlogPost", 'DateTime'>
 }

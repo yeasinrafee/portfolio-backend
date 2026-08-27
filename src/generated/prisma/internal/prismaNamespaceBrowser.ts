@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   Technology: 'Technology',
   Project: 'Project',
+  ProjectImage: 'ProjectImage',
   Skill: 'Skill',
   Experience: 'Experience',
   Education: 'Education',
@@ -117,7 +118,6 @@ export const ProjectScalarFieldEnum = {
   slug: 'slug',
   description: 'description',
   shortSummary: 'shortSummary',
-  images: 'images',
   liveUrl: 'liveUrl',
   repoUrl: 'repoUrl',
   clientName: 'clientName',
@@ -128,11 +128,27 @@ export const ProjectScalarFieldEnum = {
   viewCount: 'viewCount',
   startDate: 'startDate',
   endDate: 'endDate',
+  metaTitle: 'metaTitle',
+  metaDescription: 'metaDescription',
+  metaKeywords: 'metaKeywords',
+  ogImage: 'ogImage',
+  canonicalUrl: 'canonicalUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const ProjectImageScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  alt: 'alt',
+  order: 'order',
+  projectId: 'projectId'
+} as const
+
+export type ProjectImageScalarFieldEnum = (typeof ProjectImageScalarFieldEnum)[keyof typeof ProjectImageScalarFieldEnum]
 
 
 export const SkillScalarFieldEnum = {
@@ -182,12 +198,16 @@ export const BlogPostScalarFieldEnum = {
   excerpt: 'excerpt',
   content: 'content',
   coverImage: 'coverImage',
+  coverImageAlt: 'coverImageAlt',
   tags: 'tags',
   status: 'status',
   viewCount: 'viewCount',
   readingTimeMins: 'readingTimeMins',
   metaTitle: 'metaTitle',
   metaDescription: 'metaDescription',
+  metaKeywords: 'metaKeywords',
+  ogImage: 'ogImage',
+  canonicalUrl: 'canonicalUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

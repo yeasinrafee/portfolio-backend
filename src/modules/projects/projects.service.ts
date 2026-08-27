@@ -28,7 +28,7 @@ export class ProjectsService {
   }
 
   async create(dto: CreateProjectDto) {
-    const { technologyIds, ...data } = dto;
+    const { technologyIds, images, ...data } = dto;
     const slug = await this.generateUniqueSlug(dto.title);
 
     return this.prisma.project.create({
@@ -38,8 +38,16 @@ export class ProjectsService {
         technologies: technologyIds
           ? { connect: technologyIds.map((id) => ({ id })) }
           : undefined,
+        images: images
+          ? {
+              create: images.map((img, index) => ({
+                ...img,
+                order: img.order ?? index,
+              })),
+            }
+          : undefined,
       },
-      include: { technologies: true },
+      include: { technologies: true, images: { orderBy: { order: 'asc' } } },
     });
   }
 
@@ -72,7 +80,7 @@ export class ProjectsService {
     const [data, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({
         where,
-        include: { technologies: true },
+        include: { technologies: true, images: { orderBy: { order: 'asc' } } },
         orderBy: { [sortBy ?? 'createdAt']: sortOrder ?? 'desc' },
         skip: query.skip,
         take: limit,
@@ -88,9 +96,12 @@ export class ProjectsService {
       where: { slug },
       include: {
         technologies: true,
+        images: { orderBy: { order: 'asc' } },
         comments: {
           where: { isApproved: true },
-          include: { user: { select: { id: true, name: true, avatar: true } } },
+          include: {
+            user: { select: { id: true, name: true, avatar: true } },
+          },
           orderBy: { createdAt: 'desc' },
         },
         _count: { select: { reactions: true, comments: true } },
@@ -110,7 +121,7 @@ export class ProjectsService {
   async findOne(id: string) {
     const project = await this.prisma.project.findUnique({
       where: { id },
-      include: { technologies: true },
+      include: { technologies: true, images: { orderBy: { order: 'asc' } } },
     });
     if (!project) throw new NotFoundException('Project not found');
     return project;
@@ -118,7 +129,7 @@ export class ProjectsService {
 
   async update(id: string, dto: UpdateProjectDto) {
     await this.findOne(id);
-    const { technologyIds, ...data } = dto;
+    const { technologyIds, images, ...data } = dto;
 
     return this.prisma.project.update({
       where: { id },
@@ -127,8 +138,17 @@ export class ProjectsService {
         technologies: technologyIds
           ? { set: technologyIds.map((tid) => ({ id: tid })) }
           : undefined,
+        images: images
+          ? {
+              deleteMany: {},
+              create: images.map((img, index) => ({
+                ...img,
+                order: img.order ?? index,
+              })),
+            }
+          : undefined,
       },
-      include: { technologies: true },
+      include: { technologies: true, images: { orderBy: { order: 'asc' } } },
     });
   }
 

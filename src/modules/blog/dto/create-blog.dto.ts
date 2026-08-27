@@ -81,4 +81,29 @@ export class CreateBlogDto {
   @IsString()
   @MaxLength(160)
   metaDescription?: string;
+
+  @ApiPropertyOptional({ example: 'A screenshot of the finished dashboard' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  coverImageAlt?: string;
+
+  @ApiPropertyOptional({
+    example: ['nextjs', 'portfolio', 'tutorial'],
+    type: [String],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  metaKeywords?: string[];
+
+  @ApiPropertyOptional({ example: 'https://cdn.example.com/og/blog1.jpg' })
+  @IsOptional()
+  @IsString()
+  ogImage?: string;
+
+  @ApiPropertyOptional({ example: 'https://myportfolio.com/blog/my-post' })
+  @IsOptional()
+  @IsString()
+  canonicalUrl?: string;
 }
