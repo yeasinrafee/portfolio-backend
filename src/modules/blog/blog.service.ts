@@ -35,6 +35,8 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
     a: ['href', 'target', 'rel'],
     img: ['src', 'alt', 'width', 'height'],
     span: ['class'],
+    code: ['class'],
+    pre: ['class'],
   },
   allowedSchemes: ['http', 'https', 'mailto'],
 };
