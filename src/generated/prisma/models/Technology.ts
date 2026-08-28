@@ -432,14 +432,6 @@ export type TechnologyOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type TechnologyCreateNestedManyWithoutProjectsInput = {
   create?: Prisma.XOR<Prisma.TechnologyCreateWithoutProjectsInput, Prisma.TechnologyUncheckedCreateWithoutProjectsInput> | Prisma.TechnologyCreateWithoutProjectsInput[] | Prisma.TechnologyUncheckedCreateWithoutProjectsInput[]
   connectOrCreate?: Prisma.TechnologyCreateOrConnectWithoutProjectsInput | Prisma.TechnologyCreateOrConnectWithoutProjectsInput[]
