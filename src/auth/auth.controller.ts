@@ -17,6 +17,8 @@ import {
   ApiResponse,
   ApiConflictResponse,
   ApiUnauthorizedResponse,
+  ApiOkResponse,
+  ApiBadRequestResponse,
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
@@ -25,6 +27,9 @@ import { AuthResponseDto } from './dto/auth-response.dto';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { Throttle } from '@nestjs/throttler';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -32,6 +37,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @Throttle({ default: { limit: 5, ttl: 60000 } }) // Per IP in a min highest 5 times
   @ApiOperation({
     summary: 'Register a new user',
     description:
@@ -49,6 +55,7 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { limit: 5, ttl: 60000 } }) // Per IP in a min highest 5 times
   @ApiOperation({
     summary: 'Login with email and password',
     description:
@@ -96,5 +103,30 @@ export class AuthController {
   @ApiUnauthorizedResponse({ description: 'Access token invalid or expired' })
   logout(@CurrentUser() user: { id: string }) {
     return this.authService.logout(user.id);
+  }
+
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { limit: 3, ttl: 60000 } })
+  @ApiOperation({
+    summary: 'Request a password reset link',
+    description:
+      'Public. Always returns a generic success message regardless of whether the email exists (prevents email enumeration).',
+  })
+  @ApiOkResponse({ description: 'Generic success message' })
+  forgotPassword(@Body() dto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(dto.email);
+  }
+
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Reset password using the token from email',
+    description: 'Public.',
+  })
+  @ApiOkResponse({ description: 'Password reset successful' })
+  @ApiBadRequestResponse({ description: 'Token invalid or expired' })
+  resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto.token, dto.newPassword);
   }
 }

@@ -15,6 +15,9 @@ import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtSignOptions } from '@nestjs/jwt';
+import { EmailService } from '../email/email.service';
+import * as crypto from 'crypto';
+import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -22,6 +25,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly config: ConfigService,
+    private readonly emailService: EmailService,
   ) {}
 
   private async generateTokens(userId: string, email: string, role: string) {
@@ -106,5 +110,52 @@ export class AuthService {
   private sanitizeUser(user: any) {
     const { password, refreshToken, ...safe } = user;
     return safe;
+  }
+
+  async forgotPassword(email: string) {
+    const user = await this.usersService.findByEmail(email);
+
+    if (!user) {
+      return {
+        message:
+          'If an account with that email exists, a reset link has been sent.',
+      };
+    }
+
+    const rawToken = crypto.randomBytes(32).toString('hex');
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(rawToken)
+      .digest('hex');
+    const expires = new Date(Date.now() + 30 * 60 * 1000); // 30 min
+
+    await this.usersService.setPasswordResetToken(
+      user.id,
+      hashedToken,
+      expires,
+    );
+    await this.emailService.sendPasswordResetEmail(user.email, rawToken);
+
+    return {
+      message:
+        'If an account with that email exists, a reset link has been sent.',
+    };
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+    const user = await this.usersService.findByValidResetToken(hashedToken);
+
+    if (!user) {
+      throw new BadRequestException('Reset token is invalid or has expired');
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await this.usersService.resetPassword(user.id, hashedPassword);
+
+    return {
+      message:
+        'Password has been reset successfully. Please log in with your new password.',
+    };
   }
 }

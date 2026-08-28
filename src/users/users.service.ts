@@ -34,4 +34,32 @@ export class UsersService {
       data: { lastLoginAt: new Date() },
     });
   }
+
+  setPasswordResetToken(userId: string, hashedToken: string, expires: Date) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { passwordResetToken: hashedToken, passwordResetExpires: expires },
+    });
+  }
+
+  findByValidResetToken(hashedToken: string) {
+    return this.prisma.user.findFirst({
+      where: {
+        passwordResetToken: hashedToken,
+        passwordResetExpires: { gt: new Date() },
+      },
+    });
+  }
+
+  async resetPassword(userId: string, hashedPassword: string) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        password: hashedPassword,
+        passwordResetToken: null,
+        passwordResetExpires: null,
+        refreshToken: null,
+      },
+    });
+  }
 }

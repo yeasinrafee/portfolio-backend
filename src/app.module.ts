@@ -22,6 +22,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
 import { SeoModule } from './modules/seo/seo.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { SeoModule } from './modules/seo/seo.module';
     CloudinaryModule,
     UploadsModule,
     SeoModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
