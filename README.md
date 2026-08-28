@@ -1,5 +1,7 @@
 # Portfolio Backend
 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 A fully dynamic, production-ready backend for a personal portfolio website with an admin dashboard — built with Nest.js, Prisma, and PostgreSQL.
 
 Manages projects, blog posts (with a rich-text editor), skills, experience, education, testimonials, technologies, comments & reactions from visitors, contact form submissions, file uploads, and site-wide analytics — all through a single well-documented REST API.
@@ -189,4 +191,4 @@ prisma/
 
 ## 📄 License
 
-Add your preferred license here (e.g. MIT).
+This project is licensed under the [MIT License](./LICENSE).
