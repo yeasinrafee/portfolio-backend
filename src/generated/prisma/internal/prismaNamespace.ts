@@ -1622,6 +1622,7 @@ export type SkillScalarFieldEnum = (typeof SkillScalarFieldEnum)[keyof typeof Sk
 export const ExperienceScalarFieldEnum = {
   id: 'id',
   company: 'company',
+  companyUrl: 'companyUrl',
   role: 'role',
   location: 'location',
   description: 'description',

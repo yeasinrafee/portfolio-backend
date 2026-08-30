@@ -6,6 +6,7 @@ import {
   IsDate,
   IsInt,
   MaxLength,
+  IsUrl,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -14,6 +15,11 @@ export class CreateExperienceDto {
   @IsString()
   @MaxLength(150)
   company!: string;
+
+  @ApiPropertyOptional({ example: 'https://emperaltech.com' })
+  @IsOptional()
+  @IsUrl()
+  companyUrl?: string;
 
   @ApiProperty({ example: 'Founder & CEO', maxLength: 100 })
   @IsString()

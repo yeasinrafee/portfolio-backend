@@ -158,6 +158,7 @@ model Skill {
 model Experience {
   id          String    @id @default(uuid())
   company     String
+  companyUrl  String?
   role        String
   location    String?
   description String    @db.Text

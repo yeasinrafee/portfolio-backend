@@ -7,6 +7,9 @@ export class ExperienceResponseDto {
   @ApiProperty({ example: 'Emperal Tech' })
   company!: string;
 
+  @ApiPropertyOptional({ example: 'https://emperaltech.com' })
+  companyUrl?: string;
+
   @ApiProperty({ example: 'Founder & CEO' })
   role!: string;
 
