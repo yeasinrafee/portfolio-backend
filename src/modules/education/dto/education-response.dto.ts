@@ -10,8 +10,14 @@ export class EducationResponseDto {
   @ApiProperty({ example: 'B.Sc. in Computer Science & Engineering' })
   degree!: string;
 
+  @ApiPropertyOptional({ example: 'Computer Science & Engineering' })
+  fieldOfStudy?: string;
+
   @ApiPropertyOptional({ example: 'Dhaka, Bangladesh' })
   location?: string;
+
+  @ApiPropertyOptional({ example: 'Graduated with honors.' })
+  description?: string;
 
   @ApiProperty({ example: false })
   isCurrent!: boolean;

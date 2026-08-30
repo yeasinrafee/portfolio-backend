@@ -170,14 +170,16 @@ model Experience {
 }
 
 model Education {
-  id          String    @id @default(uuid())
-  institution String
-  degree      String
-  location    String?
-  isCurrent   Boolean   @default(false)
-  startDate   DateTime
-  endDate     DateTime?
-  order       Int       @default(0)
+  id           String    @id @default(uuid())
+  institution  String
+  degree       String
+  fieldOfStudy String?
+  location     String?
+  description  String?   @db.Text
+  isCurrent    Boolean   @default(false)
+  startDate    DateTime
+  endDate      DateTime?
+  order        Int       @default(0)
 
   @@map("educations")
 }

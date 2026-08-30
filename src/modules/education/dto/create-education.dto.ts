@@ -23,10 +23,27 @@ export class CreateEducationDto {
   @MaxLength(150)
   degree!: string;
 
+  @ApiPropertyOptional({
+    example: 'Computer Science & Engineering',
+    maxLength: 150,
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(150)
+  fieldOfStudy?: string;
+
   @ApiPropertyOptional({ example: 'Dhaka, Bangladesh' })
   @IsOptional()
   @IsString()
   location?: string;
+
+  @ApiPropertyOptional({
+    example:
+      'Graduated with honors. Led the university robotics club to a national championship.',
+  })
+  @IsOptional()
+  @IsString()
+  description?: string;
 
   @ApiPropertyOptional({ example: false, default: false })
   @IsOptional()
