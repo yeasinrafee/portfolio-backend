@@ -30,6 +30,7 @@ import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { CurrentUser } from '../../auth/decorators/current-user.decorator';
 import { Role } from '../../generated/prisma/enums';
+import { OptionalJwtAuthGuard } from '../../auth/guards/optional-jwt-auth.guard';
 
 @ApiTags('Comments')
 @Controller('comments')
@@ -37,17 +38,32 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Get()
+  @UseGuards(OptionalJwtAuthGuard)
+  @ApiBearerAuth('access-token')
   @ApiOperation({
     summary: 'List comments for a project or blog post',
     description:
-      'Public endpoint. Pass exactly one of projectId or blogPostId. Non-admin requests only see approved comments.',
+      'Public endpoint. Pass exactly one of projectId or blogPostId. Send a valid admin token to see unapproved comments too — otherwise only approved comments are returned.',
   })
   @ApiPaginatedResponse(CommentResponseDto)
   @ApiBadRequestResponse({
     description: 'Must provide exactly one of projectId or blogPostId',
   })
-  findAll(@Query() query: QueryCommentDto) {
-    return this.commentsService.findAll(query);
+  findAll(
+    @Query() query: QueryCommentDto,
+    @CurrentUser() user?: { role: Role },
+  ) {
+    return this.commentsService.findAll(query, user?.role);
+  }
+
+  // ২. নতুন অ্যাডমিন এন্ডপয়েন্ট (ড্যাশবোর্ডের জন্য - এটি যোগ করুন)
+  @Get('admin')
+  @UseGuards(JwtAuthGuard, RolesGuard) // এখানে বাধ্যতামূলক JwtAuthGuard ও RolesGuard থাকবে
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth('access-token')
+  @ApiOperation({ summary: 'List all comments for Admin moderation' })
+  findAllForAdmin(@Query() query: QueryCommentDto) {
+    return this.commentsService.findAll(query, Role.ADMIN);
   }
 
   @Post()
